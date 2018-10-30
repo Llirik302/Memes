@@ -1,0 +1,27 @@
+function main(r)
+  x=2;
+  while r.is_mark() == 0
+    r.step('o')
+    spiral(r,x)
+    x+=2;
+  endwhile
+end
+
+function spiral(r,x)
+  steps(r,x/2,'n')
+  for d = 'wso'
+      if r.is_mark() == 0
+        steps(r,x,d)
+      endif
+  endfor
+  steps(r,x/2,'n')
+endfunction
+function steps(r,x,d)
+  n=0;
+  while n<x
+    if r.is_mark() == 0
+      r.step(d)
+    endif
+    ++n;
+  endwhile
+end
