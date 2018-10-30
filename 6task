@@ -1,0 +1,43 @@
+function main(r)
+  x=1;
+  d='w';
+  while r.is_bord('n') == 1
+    steps(r,x,d)
+    ++x;
+    d = reverse(d);
+  endwhile
+  r.step('n')
+end
+
+function a=reverse(a)
+  if a=='n'
+    a='s';
+  elseif a=='s'
+    a='n';
+  elseif a=='w'
+    a='o';
+  else 
+    a='w';
+  endif
+end
+
+function x=do_upora(r,a,b)
+  x=0;
+  while r.is_bord(a)==0 && r.is_bord(b)==0
+    if r.is_bord(a)==0
+      r.step(a)
+      if r.is_bord(b)==0
+        r.step(b)
+        ++x;
+      endif
+    endif
+  endwhile
+end
+
+function steps(r,x,d)
+  i=0;
+  while(i<x)
+    r.step(d)
+    ++i;
+  endwhile
+end
