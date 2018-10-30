@@ -1,0 +1,58 @@
+function main(r)
+  a='n';
+  b='o';
+  x=do_upora(r,a,b)
+  x1=mark_line(r,reverse(a),reverse(b))
+  steps(r,a,b,(x1-x))
+  b='w';
+  x=do_upora(r,a,b)
+  x1=mark_line(r,reverse(a),reverse(b))
+  steps(r,a,b,(x1-x))
+end
+
+function a=reverse(a)
+  if a=='n'
+    a='s';
+  elseif a=='s'
+    a='n';
+  elseif a=='w'
+    a='o';
+  else 
+    a='w';
+  endif
+end
+
+function x=do_upora(r,a,b)
+  x=0;
+  while r.is_bord(a)==0 && r.is_bord(b)==0
+    if r.is_bord(a)==0
+      r.step(a)
+      if r.is_bord(b)==0
+        r.step(b)
+        ++x;
+      endif
+    endif
+  endwhile
+end
+
+function x=mark_line(r,a,b)
+  x=0;
+  while r.is_bord(a)==0 && r.is_bord(b)==0
+    r.mark()
+    if r.is_bord(a)==0
+      r.step(a)
+      if r.is_bord(b)==0
+        r.step(b)
+        ++x;
+      endif
+    endif
+  r.mark()
+  endwhile
+end
+
+function steps(r,a,b,n)
+  for k=1:n
+    r.step(a)
+    r.step(b)
+  endfor
+end
