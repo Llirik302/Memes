@@ -1,0 +1,24 @@
+ function main(A)
+   min(A,2,3)
+   min(A,2)
+   min(A,[])
+   min(A)
+ endfunction
+ 
+ 
+function m = min(X,Y,dim)
+  if nargin == 1
+    m = inf;
+    for i = 1:length(X)
+      if X(i) < m 
+        m = X(i);
+      endif
+    endfor
+    disp(m)
+  elseif nargin == 2
+    disp(2)
+  elseif nargin == 3
+    disp (3)
+  endif
+endfunction  
+ 
