@@ -1,0 +1,17 @@
+function graph()
+x = linspace(-1,50,50)
+a1 = fak(2*x -3);
+a2 = fak(2*x-2);
+y = (-1).^(x+1)*a1*2.^x/a2;
+plot(x,y);
+figure
+endfunction
+
+
+function a = fak(N)
+if mod(N,2) ~= 0 
+  a = prod( 3:2:N );
+else 
+  a = prod( 6:2:N );
+end
+endfunction
