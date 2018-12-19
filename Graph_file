@@ -1,17 +1,38 @@
-function graph()
-x = linspace(-1,150,150)
-a1 = fak(2*x -3);
-a2 = fak(2*x+2);
-y = (a1*1.1.^x)/a2;
-plot(x,y);
-axis()
+function plot_graph(f,a,,b,n)
+  dx = (b-a)/n
+  x = a:dx:b
+  y = f(x)
+  h = line(x,y)
+endfunction 
+
+
+function sum(x)
+  t = count(x,0)
+  sum = t; 
+  i = 1;
+  while sum + t != sum
+    t *= count(x, i)
+    sum += t
+    i++;
+  end   
 endfunction
 
+function t = count(x,k)
+  a1 = fak(2*k -3);
+  a2 = fak(2*k);
+  tmp = (-1).^(k+1)*(a1*x^k)/a2;
+  k++;
+  a1 = fak(2*k -3);
+  a2 = fak(2*k);
+  tmp1 = (-1)^(k+1)*(a1*x.^k)/a2;
+  t = tmp1/tmp;
+endfunction 
 
+ 
 function a = fak(N)
-if mod(N,2) != 0 
-  a = prod( 3:2:N );
-else 
-  a = prod( 6:2:N );
-end
+  if mod(N,2) != 0 
+    a = prod( 3:2:N );
+  else 
+    a = prod( 6:2:N );
+  end
 endfunction
