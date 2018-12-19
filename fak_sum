@@ -1,0 +1,18 @@
+function sum = deus_ex(x)
+  t = ((2x^2)/((0+1)(20+1)));
+  sum = t;
+  k=1;
+  while sum + t != sum
+    z =(((-1)4x^2)/((2k+2)(2k+1)));
+    t= t*z;
+    sum= sum + t;
+    k++;
+  end
+end
+
+function plot_graf(f,a,b,n)
+  dx=(b-a)/n
+  x=a:dx:b
+  y=f(x)
+  h=line(x,y)
+end
