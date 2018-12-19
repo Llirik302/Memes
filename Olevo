@@ -1,0 +1,103 @@
+function sum = f(x)
+	sum = (2 - exp(-x) - sin(x) - cos(x))/(2*x^2);
+end
+
+function sum = f_eps(x)
+	y = (4*x - x^2)/24;
+	sum = y;
+	
+	x4 = x^4;
+	k=1;
+	last = sum;
+	while 1
+		k=k+1;
+		y = - y * x4 * (4*k + 4 - x) / (4 * k - x);
+		for d=4*k-3:4*k
+			y = y / d;
+		end
+		sum = sum + y;
+		if sum == last
+			return;
+		end
+		last = sum;
+	end
+end
+
+function sum = f_n(x, n)
+	y = (4*x - x^2)/24;
+	sum = y;
+	
+	x4 = x^4;
+	for k=2:n
+		y = - y * x4 * (4*k + 4 - x) / (4 * k - x);
+		for d=4*k-3:4*k
+			y = y / d;
+		end
+		sum = sum + y;
+	end
+end
+
+function [pf, n] = factor2(q)
+	if (q < 4)
+		pf = q;
+		n = 1;
+		return;
+	end
+	
+	pf = [];
+	
+	for i=2:q
+		t = q;
+
+		while mod(t, i) == 0 && prime(i) == 1
+			t = t / i;
+			pf = [pf, i];
+		end
+	end
+	
+	if nargout > 1
+		idx = find ([0, pf] != [pf, 0]);
+		pf = pf(idx(1:length (idx)-1));
+		n = diff(idx);
+	end
+end
+
+function ret = prime(n)
+	for i=2:sqrt(n)
+		if mod(n, i) == 0
+			ret = 0;
+			return;
+		end
+	end
+	
+	ret = 1;
+end
+
+function n1(a, b, n, r)
+	stroika(@f_eps , a, b, n)
+	stroika(@f , a, b, n)
+	
+	col = hsv(length(r));
+	len = length(r);
+	for i=1:len
+		set(stroika(@(x) f_n(x, r(i)) , a, b, n), "color", col(i, :))
+	end
+end
+
+function n11(a, b, n)
+	stroika(@f_eps , a, b, n)
+	stroika(@f , a, b, n)
+end
+
+function h = stroika(f, a, b, n)
+	dx = (b-a)/n;
+	x=[];
+	y=[];
+	n=0;
+	for i=a:dx:b
+		n++;
+		x(n) = i;
+		y(n) = f(i);
+	end
+	h = line(x, y);
+end
