@@ -1,24 +1,59 @@
  function main(A)
-   min(A,2,3)
-   min(A,2)
-   min(A,[])
-   min(A)
+   display(min(A,[],3))
+   display(min(A,2))
+   display(min(A))
  endfunction
  
- 
-function m = min(X,Y,dim)
-  if nargin == 1
+
+function rekt = min(X,Y,dim)
+  if nargin == 1 
+    tmp = size(X);
+    rekt = [];
+    for j = 1:tmp(1)
+      m = inf;
+      for i = 1:tmp(2)
+        if X(j,i) < m
+          m = X(j,i);
+        endif
+      endfor
+      rekt(j) = m;
+    endfor
+  elseif nargin == 3
+    tmp = size(X);
     m = inf;
-    for i = 1:length(X)
-      if X(i) < m 
-        m = X(i);
+    for i = 1:tmp(2)
+      if X(dim,i) < m
+        m = X(dim,i);
       endif
     endfor
-    disp(m)
+    rekt = m;
   elseif nargin == 2
-    disp(2)
-  elseif nargin == 3
-    disp (3)
+    ar1 = min(X);
+    ar2 = min(Y);
+    n = 0;
+    if length(ar1) < length(ar2)
+      n = length(ar1);
+      n2 = length(ar2);
+    else
+      n = length(ar2);
+      n2 = length(ar1);
+    endif
+    finalS = [];
+    for i = 1:n
+      if ar1(i) < ar2(i)
+        rekt(i) = ar1(i);
+      else
+        rekt(i) = ar2(i);
+      endif
+    endfor
+    if length(ar1) = 1
+      for i = n:n2
+        rekt(i) = ar1(i);
+      endfor
+    elseif length(ar2) = 1
+      for i = n:n2
+        rekt(i) = ar2(i);
+      endfor
+    endif
   endif
-endfunction  
- 
+endfunction
