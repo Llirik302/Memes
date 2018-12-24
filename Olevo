@@ -37,42 +37,6 @@ function sum = f_n(x, n)
 	end
 end
 
-function [pf, n] = factor2(q)
-	if (q < 4)
-		pf = q;
-		n = 1;
-		return;
-	end
-	
-	pf = [];
-	
-	for i=2:q
-		t = q;
-
-		while mod(t, i) == 0 && prime(i) == 1
-			t = t / i;
-			pf = [pf, i];
-		end
-	end
-	
-	if nargout > 1
-		idx = find ([0, pf] != [pf, 0]);
-		pf = pf(idx(1:length (idx)-1));
-		n = diff(idx);
-	end
-end
-
-function ret = prime(n)
-	for i=2:sqrt(n)
-		if mod(n, i) == 0
-			ret = 0;
-			return;
-		end
-	end
-	
-	ret = 1;
-end
-
 function n1(a, b, n, r)
 	stroika(@f_eps , a, b, n)
 	stroika(@f , a, b, n)
