@@ -65,3 +65,14 @@ function h = stroika(f, a, b, n)
 	end
 	h = line(x, y);
 end
+
+function graph_02(a, b, n, r)
+	stroika(@sum_e , a, b, n)
+	stroika(@fun , a, b, n)
+	
+	col = hsv(length(r));
+	len = length(r);
+	for i=1:len
+		set(stroika(@(x) sum_n(x, r(i)) , a, b, n), "color", col(i, :))
+	end
+end
