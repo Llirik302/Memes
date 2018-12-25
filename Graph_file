@@ -1,38 +1,56 @@
-function plot_graph(f,a,,b,n)
-  dx = (b-a)/n
-  x = a:dx:b
-  y = f(x)
-  h = line(x,y)
-endfunction 
+function graph_02(a, b, n, r)
+	stroika(@sum_e , a, b, n)
+	stroika(@fun , a, b, n)
+	
+	col = hsv(length(r));
+	len = length(r);
+	for i=1:len
+		set(stroika(@(x) sum_n(x, r(i)) , a, b, n), "color", col(i, :))
+	end
+end
 
+function graph_01(a, b, n)
+	stroika(@sum_e, a, b, n)
+	stroika(@fun, a, b, n)
+end
 
-function sum(x)
-  t = count(x,0)
-  sum = t; 
-  i = 1;
-  while sum + t != sum
-    t *= count(x, i)
-    sum += t
-    i++;
-  end   
+function h = stroika(f, a, b, n)
+	dx = (b-a)/n;
+	x=[];
+	y=[];
+	n=0;
+	for i=a:dx:b
+		n++;
+		x(n) = i;
+		y(n) = f(i);
+	end
+	h = line(x, y);
+end
+
+function sum = sum_e(x)
+  k = 1;
+  tmp = -1*x*(2*k - 1)/(2*k+2);
+  sum = tmp;
+  while sum + tmp != sum
+    k++;
+    tmp *= -1*x*(2*k - 1)/(2*k+2);
+    sum += tmp;
+  endwhile
 endfunction
 
-function t = count(x,k)
-  a1 = fak(2*k -3);
-  a2 = fak(2*k);
-  tmp = (-1).^(k+1)*(a1*x^k)/a2;
-  k++;
-  a1 = fak(2*k -3);
-  a2 = fak(2*k);
-  tmp1 = (-1)^(k+1)*(a1*x.^k)/a2;
-  t = tmp1/tmp;
-endfunction 
 
- 
-function a = fak(N)
-  if mod(N,2) != 0 
-    a = prod( 3:2:N );
-  else 
-    a = prod( 6:2:N );
-  end
+function sum = sum_n(x,n)
+  k = 1;
+  tmp = -1*x*(2*k - 1)/(2*k+2);
+  sum = tmp;
+  while k < n
+    k++;
+    tmp *= -1*x*(2*k - 1)/(2*k+2);
+    sum += tmp;
+  endwhile
+endfunction
+
+
+function ret = fun(x)
+  ret = -2+2*(1+x).^0.5
 endfunction
