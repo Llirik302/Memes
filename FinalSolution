@@ -3,11 +3,11 @@ function ret = fun(x)
 endfunction
 
 function graph_01(a, b, n)
-	stroika(@sum_e, a, b, n)
-	stroika(@fun, a, b, n)
+	gbuild(@sum_e, a, b, n)
+	gbuild(@fun, a, b, n)
 end
 
-function h = stroika(f, a, b, n)
+function h = gbuild(f, a, b, n)
 	dx = (b-a)/n;
 	x=[];
 	y=[];
@@ -41,3 +41,14 @@ function sum = sum_n(x,n)
     sum += tmp;
   endwhile
 endfunction
+
+function graph_02(a, b, n, r)
+	gbuild(@sum_e , a, b, n)
+	gbiuld(@fun , a, b, n)
+	
+	col = hsv(length(r));
+	len = length(r);
+	for i=1:len
+		set(gbuild(@(x) sum_n(x, r(i)) , a, b, n), "color", col(i, :))
+	end
+end
