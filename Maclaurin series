@@ -1,0 +1,25 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+double arc(double x, double eps = 0.001)
+{
+	double current = x, sum = 0;
+	int n = 1, s = 1;
+	while (fabs(current) > eps) 
+	{
+		sum += s*current;
+		s *= -1;
+		n += 2;
+		current *= x * x / n;
+	}
+	return sum;
+}
+
+int main()
+{
+	double x;
+	cin >> x;
+	cout << arc(2 * pow(x, 2)) + 3 * x - 1 << endl;
+}
