@@ -1,0 +1,43 @@
+#include "pch.h"
+#include <iostream>
+#include <cmath>
+
+
+using namespace std;
+
+int space_between(double a[], int len)
+{
+	int space = 0;
+	double min = fabs(a[0]), max = fabs(a[0]);
+	int pmin = 0, pmax = 0;
+	for (int i = 1; i < len; i++)
+	{
+		if (fabs(a[i]) < min)
+		{
+			min = fabs(a[i]);
+			pmin = i;
+		}
+		else if (fabs(a[i]) >= max)
+		{
+			max = fabs(a[i]);
+			pmax = i;
+		}
+	}
+	space = max == min ? 0 : fabs(pmax - pmin);
+	return space - 1;
+}
+
+int main()
+{
+	const int c = 10;
+	double min, max;
+	double a[c] = {0};
+	for (int i = 0; i < c; i++)
+	{
+		cout << "a[" << i << "]: ";
+		cin >> a[i];
+	}
+	int size = space_between(a, c);
+	cout << size;
+	return 0;
+}
