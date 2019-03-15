@@ -1,0 +1,45 @@
+#include "stdafx.h"
+#include "stdio.h"
+#include "math.h"
+#include "stdlib.h"
+
+void HandleArray (double* arr, int len, double *mean, double *sigma, double *disp)
+{
+	double sum = 0;
+	for(int i = 0; i<len; i++)
+	{
+		sum += arr[i];
+	}
+	*mean = sum / len;
+	double sum1 = 0;
+	for (int i =0; i< len; i++)
+	{
+		sum1 += (arr[i] - *mean)*(arr[i] - *mean);
+	}
+	*disp = sum1 / len;
+	*sigma = sqrt(*disp);
+}
+
+double* RemoveAnomalies(double* arr, int len, double k, int* new_len)
+{
+	double m,s,d; m = s = d;
+	HandleArray(arr, len, &m, &s, &d);
+
+	int i = 0;
+	double k = 1.5;
+	for(int i = 0; i < len; i++)
+	{
+		if (fabs(arr[i] - m) < s*k)
+			*new_len = *new_len + 1;
+	}
+	double* new_arr = ()malloc(sizeof(double) * *new_len);
+	for(int i = 0, j = 0; i < len; i++)
+	{
+		if (fabs(arr[i] - m) < s*k){
+			new_arr[j] = arr[i];
+			j++;
+		}
+	}
+
+	return new_arr;
+}
