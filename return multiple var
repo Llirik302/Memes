@@ -1,3 +1,6 @@
+// 1503.cpp: определяет точку входа для консольного приложения.
+//
+
 #include "stdafx.h"
 #include "stdio.h"
 #include "math.h"
@@ -22,17 +25,16 @@ void HandleArray (double* arr, int len, double *mean, double *sigma, double *dis
 
 double* RemoveAnomalies(double* arr, int len, double k, int* new_len)
 {
-	double m,s,d; m = s = d;
+	double m,s,d; m = s = d = 0;
 	HandleArray(arr, len, &m, &s, &d);
 
 	int i = 0;
-	double k = 1.5;
 	for(int i = 0; i < len; i++)
 	{
 		if (fabs(arr[i] - m) < s*k)
 			*new_len = *new_len + 1;
 	}
-	double* new_arr = ()malloc(sizeof(double) * *new_len);
+	double* new_arr = (double*)malloc(sizeof(double) * *new_len);
 	for(int i = 0, j = 0; i < len; i++)
 	{
 		if (fabs(arr[i] - m) < s*k){
@@ -40,6 +42,23 @@ double* RemoveAnomalies(double* arr, int len, double k, int* new_len)
 			j++;
 		}
 	}
-
 	return new_arr;
 }
+// fabs(a[i] - mean) < sigma*k k =1,5
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	double arr[] = {10.1, 9.9, 10.2, 9.5, 12.1, 12.5, 11.1, 8.3, 9.5, 9.9};
+	double disp, sigma, mean;
+	int filtered_len = 0;
+	double* filtered_arr = RemoveAnomalies(arr, 10, 1.5, &filtered_len);
+	int i = 0;
+	for(int i = 0; i < filtered_len; i++)
+	{
+		printf("\narr[%d] = %lf", i, filtered_arr[i]);
+	}
+	free(filtered_arr);
+	scanf("%lf", disp);
+	return 0;
+}
+
