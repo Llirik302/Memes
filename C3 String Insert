@@ -1,0 +1,73 @@
+#include "pch.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+/*Написать функцию insert(), вставляющую подстроку в строку в место, 
+обозначенное индексом index */
+int get_len(char* str)
+{
+	int len = 0;
+	while (str[len])
+		len++;
+	return len;
+}
+
+void fill_a(char* str)
+{
+	int len = get_len(str);
+	char c;
+	int b = 1, i = 0;
+	while (b)
+	{
+		c = getchar();
+		if (c != '\n' && i < len)
+			str[i++] = c;
+		else
+			str[i] = b = 0;
+	}
+}
+
+char* insert(char* str1, char* str2, int index)
+{
+	int len_old1 = get_len(str1);
+	int len_old2 = get_len(str2);
+	int len = len_old1 + len_old2;
+	char* s = (char*)malloc(sizeof(char)*len);
+	int j = 0;
+	for (int i = 0; i < len; i++)
+	{
+		if (i != index) 
+		{
+			s[i] = str1[j];
+			j++;
+		}
+		else
+		{
+			for (int k = 0; k < len_old2; k++)
+			{
+				s[i] = str2[k];
+				i++;
+			}
+			i--;
+		}
+	}
+	s[len] = '\0';
+	return s;
+}
+
+int main(void)
+{
+	int n = 10;
+	char *str1;
+	char *str2;
+	str1 = (char*)malloc(n * sizeof(char));
+	str2 = (char*)malloc(n * sizeof(char));
+	fill_a(str1);
+	fill_a(str2);
+	printf("%s %s\n", str1, str2);
+	int index;
+	scanf_s("%d", &index);
+	printf("new string is %s", insert(str1, str2, index));
+	free(str1);
+	free(str2);
+}
