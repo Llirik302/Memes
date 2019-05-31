@@ -1,0 +1,99 @@
+#include "pch.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+
+int* read_file(char *address, int* len)
+{
+	FILE* f_in;
+	int* arr;
+	f_in = fopen(address, "r"); //открыть файл, режим "r" - чтение
+	if (f_in != NULL) // или if(f_in) - файл удалось открыть
+	{
+		//fgets(str, 80, f_in); - прочесть строку из файла, не более 80 символов или до новой строки, поместить прочитанное в переменную str
+
+		//если нужно прочесть не строку, можно использовать аналог функции scanf(); не забываем указывать файл, откуда читаем 
+		fscanf(f_in, "%d", len);
+		//считаем, что в начале файла указано количество элементов массива
+		//выделяем память и читаем массив
+		int i = 0;
+		arr = (int*)calloc(*len, sizeof(int));
+		while (i < *len)
+		{
+			fscanf(f_in, "%d", &arr[i]);
+			i++;
+		}
+
+		//закрыли файл
+		fclose(f_in);
+	}
+
+	//вернули прочитанный (если всё в порядке) массив
+	return arr;
+}
+
+bool write_to_file(char* address, int param)
+{
+	FILE* f_out;
+	f_out = fopen(address, "w"); //открыть файл, режим "w" - запись, "a" - добавить в конец и т.д.
+	if (f_out != NULL) // или if(f_out) - файл удалось открыть
+	{
+		//fputs(str, f_out); - записать строку в файл
+		//если нужно записать не строку, можно использовать аналог функции printf()
+		fprintf(f_out, "%d", param);
+
+		//закрыли файл
+		fclose(f_out);
+
+		//всё хорошо - вернули true
+		return true;
+	}
+
+	//если мы здесь, - записать в файл не удалось
+	return false;
+}
+
+int get_max(int* a, int len)
+{
+	int max = a[0];
+	int i = 1;
+	for (; i < len; i++)
+	{
+		if (a[i] > max) max = a[i];
+	}
+	return max;
+}
+
+int main()
+{
+	//во входном файле - массив, в выходной надо записать результат его обработки
+                          "C:\\Users\\User\\Documents\\Visual Studio 2017\\Projects\\C_task_5"
+	char file_in_path[] = "C:\\Users\\User\\Documents\\Visual Studio 2017\\Projects\\C_task_5\\input.txt";
+	char file_out_path[] = "C:\\Users\\User\\Documents\\Visual Studio 2017\\Projects\\C_task_5\\output.txt";
+
+	int* arr;
+	int len;
+	int i = 0;
+
+	arr = read_file(file_in_path, &len);
+	printf("\nArray from file: \n");
+	for (i = 0; i < len; i++) printf("%d ", arr[i]);
+	printf("\n");
+	/*	char c; scanf("%c", &c);
+
+		int m = get_max(arr, len);
+		printf("\nMax = %d", m);
+		printf("\n");
+		scanf("%c", &c);
+
+		printf("\nWrite attempt: %d", (int)write_to_file(file_out_path, m));
+		printf("\n");
+		scanf("%c", &c);
+
+		if(arr!=NULL)
+			free(arr);
+
+		*/
+	return 0;
+}
